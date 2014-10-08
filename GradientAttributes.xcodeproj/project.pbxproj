@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		8D8201DF19E49CA600BBEED5 /* GradientAttributes.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D8201DE19E49CA600BBEED5 /* GradientAttributes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8D8201E919E49CA600BBEED5 /* GradientAttributesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8201E819E49CA600BBEED5 /* GradientAttributesTests.swift */; };
+		8D8201F319E49CC200BBEED5 /* GradientAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8201F219E49CC200BBEED5 /* GradientAttributes.swift */; };
+		8D8201F419E49CC200BBEED5 /* GradientAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8201F219E49CC200BBEED5 /* GradientAttributes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,6 +20,7 @@
 		8D8201E419E49CA600BBEED5 /* GradientAttributesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GradientAttributesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D8201E719E49CA600BBEED5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D8201E819E49CA600BBEED5 /* GradientAttributesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientAttributesTests.swift; sourceTree = "<group>"; };
+		8D8201F219E49CC200BBEED5 /* GradientAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientAttributes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +62,7 @@
 		8D8201DB19E49CA600BBEED5 /* GradientAttributes */ = {
 			isa = PBXGroup;
 			children = (
+				8D8201F219E49CC200BBEED5 /* GradientAttributes.swift */,
 				8D8201DE19E49CA600BBEED5 /* GradientAttributes.h */,
 				8D8201DC19E49CA600BBEED5 /* Supporting Files */,
 			);
@@ -196,6 +200,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D8201F319E49CC200BBEED5 /* GradientAttributes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,6 +208,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D8201F419E49CC200BBEED5 /* GradientAttributes.swift in Sources */,
 				8D8201E919E49CA600BBEED5 /* GradientAttributesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -298,6 +304,7 @@
 		8D8201ED19E49CA600BBEED5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -307,12 +314,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		8D8201EE19E49CA600BBEED5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
