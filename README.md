@@ -6,10 +6,10 @@ A Swift library that simplifies the use of a CAGradientLayer.
 
 Creating attributes for a CAGradientLayer can be tedious:
 
-- Colors and Locations array must be typed as [AnyObject]
+- Colors and Locations array must be typed as `[AnyObject]`
 - Colors and Locations are provided by separate arrays instead of together as a pair of related values.
-- Colors must return CGColors
-- Changing the direction of gradients to common directions is non-obvious.
+- Colors must return `CGColor` as values
+- Changing the direction of a gradient to common directions is non-obvious and unclear when reading code.
 - A location value must be provided along with each color, which could be tedious to maintain.
 
 GradientAttributes improves this experience by providing a nicer syntax for defining color stops, as well as providing additional logic to interpolate location values so you only need to provide what you care about.
