@@ -14,12 +14,10 @@ class GradientAttributesTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
 
     }
 
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
 
@@ -35,12 +33,25 @@ class GradientAttributesTests: XCTestCase {
 
     func testMissingLocations() {
         attributes.stops = [
-            GradientAttributes.Stop(.redColor()),
-            GradientAttributes.Stop(.greenColor(), location: 0.2),
-            GradientAttributes.Stop(.blueColor()),
+            GradientAttributes.Stop(.blackColor()),
+            GradientAttributes.Stop(.whiteColor()),
+            GradientAttributes.Stop(.blackColor(), location: 0.2),
+            GradientAttributes.Stop(.whiteColor(), location: 0.9),
+            GradientAttributes.Stop(.blackColor()),
+            GradientAttributes.Stop(.whiteColor()),
         ]
 
-        XCTAssertNil(attributes.locations(), "For now, locations will return nil unless they are all provided.")
+        let first = attributes.locations()!.first as Double
+        XCTAssertEqual(first, 0, "Initial value of 0 should be added.")
+
+        let last = attributes.locations()!.last as Double
+        XCTAssertEqual(last, 1, "Final value of 1 should be added.")
+
+        let firstGroup = attributes.locations()![1] as Double
+        XCTAssertEqual(firstGroup, 0.1, "Mid-points should be interpolated if any location is provided")
+
+        let secondGroup = attributes.locations()![4] as Double
+        XCTAssertEqual(secondGroup, 0.95, "Mid-points should be interpolated if any location is provided")
     }
     
     func testProvidedLocations() {

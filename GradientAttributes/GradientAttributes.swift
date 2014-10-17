@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 
-struct GradientAttributes {
-    enum Direction {
+public struct GradientAttributes {
+    public enum Direction {
         case Vertical, Horizontal
 
         func startPoint() -> CGPoint {
@@ -32,35 +32,35 @@ struct GradientAttributes {
         }
     }
 
-    struct Stop {
+    public struct Stop {
         var color: UIColor
-        var location: Float?
+        var location: Double?
 
         init (_ color: UIColor) {
             self.color = color
         }
-        init (_ color: UIColor, location: Float) {
+        init (_ color: UIColor, location: Double) {
             self.init(color)
             self.location = location
         }
     }
 
-    var stops: [Stop]
-    var direction: Direction?
+    public var stops: [Stop]
+    public var direction: Direction?
 
-    init () {
+    public init () {
         stops = [
             GradientAttributes.Stop(UIColor.blackColor()),
             GradientAttributes.Stop(UIColor.whiteColor()),
         ]
     }
 
-    init (direction: Direction) {
+    public init (direction: Direction) {
         self.init()
         self.direction = direction
     }
 
-    func applyToLayer(inout layer: CAGradientLayer) {
+    public func applyToLayer(inout layer: CAGradientLayer) {
         layer.colors = colors()
         layer.locations = locations()
 
@@ -70,33 +70,60 @@ struct GradientAttributes {
         }
     }
 
-    func colors() -> [AnyObject] {
+    public func colors() -> [AnyObject] {
         return stops.map { (var stop) -> AnyObject in
             return stop.color.CGColor
         }
     }
 
-    func locations() -> [AnyObject]? {
-        var locations: [AnyObject]? = stops.filter { $0.location? != nil }.map { Float($0.location!) }
+    public func locations() -> [AnyObject]? {
+        var locations: [Double?] = stops.map { $0.location? as Double? }
+        var noLocationsProvided: Bool = locations.filter { $0 == nil }.count == locations.count
 
-        if locations?.count != stops.count {
-            println("Ignoring locations due to missing values... I'd like to add support for missing values soon...")
-            locations = nil
+        if noLocationsProvided {
+            return nil
+        } else {
+            return interpolatedLocations(locations)
+        }
+    }
+
+    private func interpolatedLocations(rawLocations: [Double?]) -> [AnyObject] {
+        var locations = rawLocations
+        
+        locations[0] = locations[0] ?? 0
+        let lastIndex = locations.count - 1
+        locations[lastIndex] = locations[lastIndex] ?? 1
+
+        var missingIndexes: [Bool] = locations.map { $0 == nil }
+
+        while let missingIndex = find(missingIndexes, true) {
+            var lastSetValue = locations[missingIndex - 1]!
+            var nextSetValue: Double?
+
+            var missingCount = 1
+            while nextSetValue == nil {
+                if let foundValue = locations[missingIndex + missingCount] {
+                    nextSetValue = foundValue
+
+                    let span = foundValue - lastSetValue
+                    let increment = span / Double(missingCount + 1)
+
+                    var nextMissing = missingIndex
+                    while missingCount > 0 {
+                        let replacementValue = lastSetValue + increment
+                        locations[nextMissing] = replacementValue
+                        missingIndexes[nextMissing] = false
+
+                        lastSetValue = replacementValue
+                        nextMissing += 1
+                        missingCount -= 1
+                    }
+                } else {
+                    missingCount += 1
+                }
+            }
         }
 
-        return locations
-
-        //        var locations = stops.map { (var stop) -> AnyObject? in
-        ////            if let location = stop.location {
-        ////                return location
-        ////            }
-        //            return stop.location
-        //        }
-        //
-        //        locations = locations.reduce([]) {
-        //            if let location = stop.location {
-        //                return location
-        //            }
-        //        }
+        return locations.filter { $0 != nil }.map { $0! as AnyObject }
     }
 }
