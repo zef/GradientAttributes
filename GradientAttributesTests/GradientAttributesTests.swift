@@ -12,23 +12,25 @@ import XCTest
 class GradientAttributesTests: XCTestCase {
     var attributes = GradientAttributes()
 
-    override func setUp() {
-        super.setUp()
-
-    }
-
-    override func tearDown() {
-        super.tearDown()
-    }
-
-    func testNoLocations() {
+    func testBasicGradient() {
         attributes.stops = [
             GradientAttributes.Stop(.redColor()),
             GradientAttributes.Stop(.greenColor()),
             GradientAttributes.Stop(.blueColor()),
         ]
 
+        // wanted to test that .colors() returns CGColors here but not sure how...
         XCTAssertNil(attributes.locations(), "Locations should return nil when omitted")
+    }
+    
+    func testProvidedLocations() {
+        attributes.stops = [
+            GradientAttributes.Stop(.redColor(), location: 0),
+            GradientAttributes.Stop(.greenColor(), location: 0.2),
+            GradientAttributes.Stop(.blueColor(), location: 1),
+        ]
+
+        XCTAssertEqual(attributes.locations()!.count, 3, "Locations should be returned.")
     }
 
     func testMissingLocations() {
@@ -52,15 +54,5 @@ class GradientAttributesTests: XCTestCase {
 
         let secondGroup = attributes.locations()![4] as Double
         XCTAssertEqual(secondGroup, 0.95, "Mid-points should be interpolated if any location is provided")
-    }
-    
-    func testProvidedLocations() {
-        attributes.stops = [
-            GradientAttributes.Stop(.redColor(), location: 0),
-            GradientAttributes.Stop(.greenColor(), location: 0.2),
-            GradientAttributes.Stop(.blueColor(), location: 1),
-        ]
-
-        XCTAssertEqual(attributes.locations()!.count, 3, "Locations should be returned.")
     }
 }
