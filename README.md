@@ -14,6 +14,10 @@ Creating attributes for a CAGradientLayer can be tedious:
 
 GradientAttributes improves this experience by providing a nicer syntax for defining color stops, as well as providing additional logic to interpolate location values so you only need to provide what you care about.
 
+## How?
+
+For now, see [the tests](https://github.com/zef/GradientAttributes/blob/master/GradientAttributesTests/GradientAttributesTests.swift) and [code](https://github.com/zef/GradientAttributes/blob/master/GradientAttributes/GradientAttributes.swift) for usage details.
+
 ## TODO
 
 - [ ] Document usage in README
